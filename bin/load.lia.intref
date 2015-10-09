@@ -1,0 +1,25 @@
+#!/bin/sh
+
+bank=${1:-0}
+file=$2
+freq=$3
+
+
+if [ "x$freq" = "x" ]; then
+	echo "USAGE: load.lia.intref BANK FILE FREQ"
+	exit 1
+fi
+if [ ! -e $file ]; then
+	echo "ERROR: file $file not found"
+	exit 1
+fi
+let nsam="$(ls -l $file | awk '{ print $5/4 }')"
+let POW217=131072
+let ICLK=100000000
+let refstep="$freq*$POW217*$nsam/$ICLK"
+
+echo $bank >/dev/dsp1/REF_ID
+cat $file > /dev/dsp1.2
+echo $nsam > /dev/dsp1/REF_LENGTH
+echo $refstep > /dev/dsp1/REF_STEP
+
