@@ -1,0 +1,13 @@
+#!/bin/sh
+
+bank=${1:-0}
+
+echo $bank >/dev/dsp1/REF_ID
+
+if [ "x$2" = "x" ]; then
+	echo bank:$bank REF_OFFSET:$(cat /dev/dsp1/REF_OFFSET)
+else
+	echo $2 > /dev/dsp1/REF_OFFSET
+fi
+
+

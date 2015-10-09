@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "NUM_CH = "$(cat /dev/dsp1/@NUM_CH)
+echo "NUM_REF = "$(cat /dev/dsp1/@NUM_REF)
+
+echo "set external refs 0-4 to be channels 0-4"
+
+set.lia.ref_chan 0 0
+set.lia.ref_chan 1 1
+set.lia.ref_chan 2 2
+set.lia.ref_chan 3 3
+set.lia.ref_chan 4 4
+

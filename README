@@ -1,0 +1,24 @@
+README for package: custom_lia
+
+Lock In Amplifier support
+
+mv /mnt/packages.opt/99-custom_lia-*tgz /mnt/packages
+
+Please note: custom sysconfig required.
+
+please review examples 
+/usr/local/CARE/LIA/sysconfig
+it may be enough to simply copy-over and reboot:
+cp /usr/local/CARE/LIA/sysconfig/acq425-16-transient.init \
+	/mnt/local/sysconfig/transient.init
+
+
+Control reference offset with
+set.lia.ref_offset REF OFFSET
+.. set offset value for REF
+set.lia.ref_chan REF CHAN
+.. set external reference channel for REF
+
+
+
+
