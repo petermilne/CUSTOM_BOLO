@@ -18,7 +18,8 @@ set.lia.ref_offset REF OFFSET
 .. set offset value for REF
 set.lia.ref_chan REF CHAN
 .. set external reference channel for REF
-
+set.lia.intref.freq REF
+.. set intref frequency
 
 
 
