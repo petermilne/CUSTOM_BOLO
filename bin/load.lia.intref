@@ -1,12 +1,12 @@
 #!/bin/sh
 
 bank=${1:-0}
-file=${2:/usr/local/CARE/LIA/lia-intref-1024}
-freq=$3
+freq=$2
+file=${3:-/usr/local/CARE/LIA/lia-intref-1024}
 
 
-if [ "x$freq" = "x" ]; then
-	echo "USAGE: load.lia.intref BANK FILE FREQ"
+if [ $freq -eq 0 ]; then
+	echo "USAGE: load.lia.intref BANK FREQ \[FILE\]"
 	exit 1
 fi
 if [ ! -e $file ]; then

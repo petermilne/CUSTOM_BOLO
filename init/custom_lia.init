@@ -8,7 +8,7 @@ ln -s /sys/kernel/debug/dsp1/ /dev/dsp1
 cat /usr/local/CARE/LIA/lia-regdef >/dev/dsp1/.create
 mkdir /etc/acq400/14/
 ln -s /dev/dsp1/* /etc/acq400/14/
-ln -s /usr/local/bin/set.lia.* /etc/acq400/14/
+ln -s /usr/local/bin/*lia* /etc/acq400/14/
 grep dsp /proc/devices | /usr/local/CARE/LIA/build_dsp_nodes
 ls -l /dev/dsp1.*
 

@@ -6,14 +6,19 @@ freq=$2
 
 
 if [ "x$freq" = "x" ]; then
-	echo "USAGE: load.lia.intref BANK FILE FREQ"
+	echo "USAGE: load.lia.intref BANK FREQ"
 	exit 1
 fi
-let nsam="$(ls -l $file | awk '{ print $5/4 }')"
+echo $bank >/dev/dsp1/REF_ID
+
+let nsam="$(cat /dev/dsp1/REF_LENGTH)"
+if [ $nsam -eq 0 ]; then
+	echo "WARNING: reference length zero, please load reference"
+	exit 1
+fi
 let POW217=131072
 let ICLK=100000000
 let refstep="$freq*$POW217*$nsam/$ICLK"
 
-echo $bank >/dev/dsp1/REF_ID
 echo $refstep > /dev/dsp1/REF_STEP
 

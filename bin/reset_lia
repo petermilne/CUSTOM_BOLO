@@ -1,0 +1,4 @@
+#!/bin/sh
+echo 8 > /dev/dsp1/DSP_CONTROL
+echo 0 > /dev/dsp1/DSP_CONTROL
+
