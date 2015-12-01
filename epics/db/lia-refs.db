@@ -1,0 +1,11 @@
+# lia-refs.db
+
+
+
+record(bo, "${UUT}:HAS_LIA") {
+	field(DTYP, "Soft Channel")
+	field(VAL, "1")
+	field(PINI, "YES")
+}
+
+

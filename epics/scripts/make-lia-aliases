@@ -1,0 +1,86 @@
+#!/bin/sh
+
+HN=$(hostname)
+
+NC=$(get.site 14 @NUM_CH)
+MODE=$(get.site 14 @REF_SOURCE)
+NR=$(get.site 14 @NUM_REF)
+
+ALIAS_DB=/usr/local/epics/db/lia-aliases.db
+LEN=${SIZE:-4096}
+
+make_real_aliases() {
+(
+for ch in $(seq 1 $NC); do
+	let ch1="($ch-1)*$NR"
+	for ref in $(seq 1 $NR); do
+		let chn="$ch1+$ref"
+		printf "alias(\"$HN:1:AI:WF:%02d\", \"$HN:1:CH%02d:REF%d\")\\n" \
+			$chn $ch $ref
+		printf "alias(\"$HN:1:AI:WF:%02d:V\", \"$HN:1:CH%02d:REF%d:V\")\\n" \
+			$chn $ch $ref
+	done
+done
+)
+}
+
+IQ() {
+	if [ $1 -eq 0 ]; then
+		echo I
+	else
+		echo Q
+	fi
+}
+
+make_cplx_aliases() { (
+for ch in $(seq 1 $NC); do
+	for iq in 0 1; do
+		let ch1="($ch-1+$iq)*$NR"
+		for ref in $(seq 1 $NR); do
+			let chn="$ch1+$ref"
+			printf "alias(\"$HN:1:AI:WF:%02d\", \
+				\"$HN:1:CH%02d:REF%d:%c\")\\n" \
+				$chn $ch $ref $(IQ $iq)
+		done
+	done
+done
+) }
+
+make_cplx_spec() {
+for ch in $(seq 1 $NC); do
+	for ref in $(seq 1 $NR); do
+		let chx="ch*NR+$ref-1"
+		cid=$(printf "%02d" $chx)
+		pfx=$(printf "$HN:1:CH%02d:REF%d" $ch $ref)
+		
+		cprams="UUT=$HN,SITE=1,RS=LONG,PFX=$pfx,cid=$cid,LEN=$LEN"
+		echo "dbLoadRecords(\"db/wfComplex.db\",\"$cprams\")"
+	done
+done
+}
+
+load_lia_aliases() {
+cat - <<EOF
+dbLoadRecords("db/lia-aliases.db","")
+EOF
+}
+
+
+if [ $MODE -ne 0 ]; then
+	# echo COMPLEX LIA detected
+	make_cplx_aliases > $ALIAS_DB
+	load_lia_aliases
+	make_cplx_spec
+else
+	make_real_aliases > $ALIAS_DB
+	load_lia_aliases
+fi
+
+PRAMS="UUT=$HN,SITE=1,SPORT=S14"
+
+for ref in $(seq 1 $NR); do
+	echo 'dbLoadRecords("db/lia-refs.db","'$PRAMS,REF=$ref'")'
+done
+
+
+
