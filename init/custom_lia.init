@@ -12,6 +12,8 @@ ln -s /usr/local/bin/*lia* /etc/acq400/14/
 grep dsp /proc/devices | /usr/local/CARE/LIA/build_dsp_nodes
 ls -l /dev/dsp1.*
 
+ln -s /usr/local/CARE/hanning-float.bin /dev/shm/window
+
 
 /usr/local/init/acq400ioc.init stop
 /usr/local/init/acq400_knobs.init start
