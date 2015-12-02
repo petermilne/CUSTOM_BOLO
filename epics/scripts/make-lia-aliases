@@ -33,14 +33,14 @@ IQ() {
 }
 
 make_cplx_aliases() { (
+let chn=1
 for ch in $(seq 1 $NC); do
 	for iq in 0 1; do
-		let ch1="($ch-1+$iq)*$NR"
 		for ref in $(seq 1 $NR); do
-			let chn="$ch1+$ref"
 			printf "alias(\"$HN:1:AI:WF:%02d\", \
 				\"$HN:1:CH%02d:REF%d:%c\")\\n" \
 				$chn $ch $ref $(IQ $iq)
+			let chn=$chn+1
 		done
 	done
 done
