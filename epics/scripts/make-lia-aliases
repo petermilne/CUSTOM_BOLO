@@ -50,14 +50,15 @@ done
 ) }
 
 make_cplx_spec() {
+let chn=1
 for ch in $(seq 1 $NC); do
 	for ref in $(seq 1 $NR); do
-		let chx="ch*NR+$ref-1"
-		cid=$(printf "%02d" $chx)
+		cid=$(printf "%02d" $chn)
 		pfx=$(printf "$HN:1:CH%02d:REF%d" $ch $ref)
 		
 		cprams="UUT=$HN,SITE=1,REF=${ref},RS=LONG,PFX=$pfx,cid=$cid,LEN=$LEN,FSB=128"
 		echo "dbLoadRecords(\"db/wfComplex.db\",\"$cprams\")"
+		let chn=$chn+1
 	done
 done
 }
