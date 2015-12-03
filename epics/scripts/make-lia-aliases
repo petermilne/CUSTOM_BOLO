@@ -6,7 +6,9 @@ NC=$(get.site 14 @NUM_CH)
 MODE=$(get.site 14 @REF_SOURCE)
 NR=$(get.site 14 @NUM_REF)
 
-ALIAS_DB=/usr/local/epics/db/lia-aliases.db
+ALIAS_DB=db/lia-aliases.db
+ALIAS_DB2=db/lia-aliases2.db
+
 LEN=${SIZE:-4096}
 source ./scripts/record_support.sh
 
@@ -54,15 +56,19 @@ for ch in $(seq 1 $NC); do
 		cid=$(printf "%02d" $chx)
 		pfx=$(printf "$HN:1:CH%02d:REF%d" $ch $ref)
 		
-		cprams="UUT=$HN,SITE=1,RS=LONG,PFX=$pfx,cid=$cid,LEN=$LEN,FSB=128"
+		cprams="UUT=$HN,SITE=1,REF=${ref},RS=LONG,PFX=$pfx,cid=$cid,LEN=$LEN,FSB=128"
 		echo "dbLoadRecords(\"db/wfComplex.db\",\"$cprams\")"
 	done
 done
 }
+# acq1001_044:1:AI:WF:FMIXER
+make_mixer_alias() {
+	echo "alias(\"${HN}:DSP:LIA:REF:FREQ:1\", \"${HN}:1:AI:WF:FMIXER\")"
+}
 
 load_lia_aliases() {
 cat - <<EOF
-dbLoadRecords("db/lia-aliases.db","")
+dbLoadRecords("$1","")
 EOF
 }
 
@@ -70,8 +76,9 @@ EOF
 if [ $MODE -ne 0 ]; then
 	# echo COMPLEX LIA detected
 	make_cplx_aliases > $ALIAS_DB
-	load_lia_aliases
+	load_lia_aliases $ALIAS_DB
 	make_cplx_spec
+	make_mixer_alias > $ALIAS_DB2
 else
 	make_real_aliases > $ALIAS_DB
 	load_lia_aliases
@@ -84,6 +91,11 @@ for ref in $(seq 1 $NR); do
 	echo 'dbLoadRecords("db/lia-refs.db","'${cprams}'")'
 	create_asyn_channel S14 127.0.0.1:4234	
 done
+
+if [ $MODE -ne 0 ]; then
+	load_lia_aliases $ALIAS_DB2
+fi
+
 
 
 
