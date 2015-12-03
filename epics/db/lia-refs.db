@@ -8,4 +8,60 @@ record(bo, "${UUT}:HAS_LIA") {
 	field(PINI, "YES")
 }
 
+record(longout, "${UUT}:DSP:LIA:REF") {
+	field(DTYP, "Soft Channel")
+	field(DRVL, "0")
+	field(DRVH, "${REF}")
+	field(FLNK, "${UUT}:DSP:LIA:REF:w PP")
+}
 
+record(longout, "${UUT}:DSP:LIA:REF:w") {
+	field(DTYP, "stream")
+	field(OMSL, "closed_loop")
+	field(DOL,  "${UUT}:DSP:LIA:REF")
+	field(OUT,  "@lia.proto setREF ${SPORT}")
+	field(DISV, "1")
+	field(SDIS, "${UUT}:DSP:LIA:REF:r.PACT")
+}
+
+record(longin, "${UUT}:DSP:LIA:REF:r") {
+	field(DTYP, "stream")
+	field(SCAN, "1 second")
+	field(INP,  "@lia.proto getREF ${SPORT}")
+	field(PINI, "YES")
+	field(FLNK, "${UUT}:DSP:LIA:REF:s")
+}
+
+record(longout, "${UUT}:DSP:LIA:REF:s") {
+	field(DTYP, "Soft Channel")
+	field(OMSL, "closed_loop")
+	field(DOL,  "${UUT}:DSP:LIA:REF:r NPP")
+	field(OUT,  "${UUT}:DSP:LIA:REF PP")
+}
+
+record(longout, "${UUT}:DSP:LIA:REF:FREQ:${REF}") {
+	field(DTYP, "Soft Channel")
+	field(DRVL, "${FMIN}")
+	field(DRVH, "${FMAX}")
+	field(FLNK, "${UUT}:DSP:LIA:REF:FREQ:${REF}:c")
+}
+
+record(calc, "${UUT}:DSP:LIA:REF:FREQ:${REF}:c")
+{
+	field(INPA, "${UUT}:DSP:LIA:REF:FREQ:${REF}")
+# POW217
+	field(INPB, "131072")
+# ICLK
+	field(INPC, "100000000")
+# nsam WARNING: const
+	field(INPD, "1024")
+	field(CALC, "A*B*D/C")
+	field(FLNK, "${UUT}:DSP:LIA:REF:FREQ:${REF}:REF_STEP")
+}
+
+record(longout, "${UUT}:DSP:LIA:REF:FREQ:${REF}:REF_STEP") {
+	field(DTYP, "stream")
+	field(OUT,  "@lia.proto setREF_STEP ${SPORT}")
+	field(OMSL, "closed_loop")
+	field(DOL,  "${UUT}:DSP:LIA:REF:FREQ:${REF}:c")
+}

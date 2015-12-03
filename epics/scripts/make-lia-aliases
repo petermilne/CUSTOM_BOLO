@@ -8,6 +8,7 @@ NR=$(get.site 14 @NUM_REF)
 
 ALIAS_DB=/usr/local/epics/db/lia-aliases.db
 LEN=${SIZE:-4096}
+source ./scripts/record_support.sh
 
 make_real_aliases() {
 (
@@ -79,7 +80,9 @@ fi
 PRAMS="UUT=$HN,SITE=1,SPORT=S14"
 
 for ref in $(seq 1 $NR); do
-	echo 'dbLoadRecords("db/lia-refs.db","'$PRAMS,REF=$ref'")'
+	cprams="${PRAMS},FMIN=45000,FMAX=50000,REF=$ref"
+	echo 'dbLoadRecords("db/lia-refs.db","'${cprams}'")'
+	create_asyn_channel S14 127.0.0.1:4234	
 done
 
 

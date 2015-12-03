@@ -15,7 +15,6 @@ mkdir -p opkg/usr/local/bin \
 cp -a CARE/* opkg/usr/local/CARE
 cp bin/* opkg/usr/local/bin
 cp init/* opkg/usr/local/init
-cp awgdata/* opkg/usr/local/awgdata
 cp README opkg/usr/local/init/$PKG-README
 cp -a epics/* opkg/usr/local/epics/
 
