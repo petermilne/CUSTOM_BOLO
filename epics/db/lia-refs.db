@@ -42,7 +42,9 @@ record(longout, "${UUT}:DSP:LIA:REF:s") {
 record(longout, "${UUT}:DSP:LIA:REF:FREQ:${REF}") {
 	field(DTYP, "Soft Channel")
 	field(DRVL, "${FMIN}")
+	field(LOPR, "${FMIN}")
 	field(DRVH, "${FMAX}")
+	field(HOPR, "${FMAX}")
 	field(FLNK, "${UUT}:DSP:LIA:REF:FREQ:${REF}:c")
 }
 
@@ -61,7 +63,7 @@ record(calc, "${UUT}:DSP:LIA:REF:FREQ:${REF}:c")
 
 record(longout, "${UUT}:DSP:LIA:REF:FREQ:${REF}:REF_STEP") {
 	field(DTYP, "stream")
-	field(OUT,  "@lia.proto setREF_STEP ${SPORT}")
+	field(OUT,  "@lia.proto setREF_STEP(${REF0}) ${SPORT}")
 	field(OMSL, "closed_loop")
 	field(DOL,  "${UUT}:DSP:LIA:REF:FREQ:${REF}:c")
 }

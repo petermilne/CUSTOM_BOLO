@@ -88,7 +88,8 @@ fi
 PRAMS="UUT=$HN,SITE=1,SPORT=S14"
 
 for ref in $(seq 1 $NR); do
-	cprams="${PRAMS},FMIN=1000,FMAX=49000,REF=$ref"
+	let ref0=$ref-1
+	cprams="${PRAMS},FMIN=1000,FMAX=49000,REF=$ref,REF0=$ref0"
 	echo 'dbLoadRecords("db/lia-refs.db","'${cprams}'")'
 done
 create_asyn_channel S14 127.0.0.1:4234	
