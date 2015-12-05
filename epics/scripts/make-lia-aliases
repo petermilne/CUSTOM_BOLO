@@ -88,10 +88,10 @@ fi
 PRAMS="UUT=$HN,SITE=1,SPORT=S14"
 
 for ref in $(seq 1 $NR); do
-	cprams="${PRAMS},FMIN=45000,FMAX=50000,REF=$ref"
+	cprams="${PRAMS},FMIN=1000,FMAX=49000,REF=$ref"
 	echo 'dbLoadRecords("db/lia-refs.db","'${cprams}'")'
-	create_asyn_channel S14 127.0.0.1:4234	
 done
+create_asyn_channel S14 127.0.0.1:4234	
 
 if [ $MODE -ne 0 ]; then
 	load_lia_aliases $ALIAS_DB2
