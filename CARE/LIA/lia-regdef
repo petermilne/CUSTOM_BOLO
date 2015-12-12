@@ -2,6 +2,7 @@
 # NB: use spaces
 @MODULE_ID     0x000 0xffffffff r %08x
 @MODULE_ID.MT  0x000 0xff000000 r %02x
+@MODULE_ID.LIA_TYPE 0x000 0x00ff0000 r %02x
 @MODULE_ID.RV  0x000 0x0000ffff r %d
 @NUM_CH        0x00c 0x000000ff r %d
 @NUM_REF       0x00c 0x00001f00 r %d
