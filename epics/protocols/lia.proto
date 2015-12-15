@@ -1,0 +1,35 @@
+Terminator = LF;
+ExtraInput = Ignore;
+
+getREF {
+	out "REF_ID";
+	in "%d";
+}
+
+setREF {
+	out "REF_ID %d";
+}
+
+setREF_STEP {
+	out "REF_ID \$1";
+	out "REF_STEP %d";
+}
+
+getREF_STEP {
+	out "REF_ID \$1";
+	out "REF_STEP";
+	in "%d";
+}
+
+setP {
+	out "REF_ID \$1";
+	out "\$2 %d";
+}
+
+getP {
+	out "REF_ID \$1";
+	out "\$2";
+	in "%d";
+}
+
+
