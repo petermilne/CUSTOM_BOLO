@@ -73,25 +73,35 @@ dbLoadRecords("$1","")
 EOF
 }
 
+PRAMS="UUT=$HN,SITE=1,SPORT=S14"
 
 if [ $MODE -ne 0 ]; then
 	# echo COMPLEX LIA detected
 	make_cplx_aliases > $ALIAS_DB
 	load_lia_aliases $ALIAS_DB
 	make_cplx_spec
+	for ref in $(seq 1 $NR); do
+		let ref0=$ref-1
+		cprams="${PRAMS},FMIN=1000,FMAX=49000,REF=$ref,REF0=$ref0"
+		echo 'dbLoadRecords("db/lia-refs.db","'${cprams}'")'
+	done
 	make_mixer_alias > $ALIAS_DB2
 else
 	make_real_aliases > $ALIAS_DB
 	load_lia_aliases
+	let nrm1="$NR-1"
+	for ref in $(seq 1 $NR); do
+		let ref0=$ref-1
+		cprams="${PRAMS},REF=$ref,REF0=$ref0"
+		xprams="${cprams},T=REF_OFFSET,LO=-32767,HI=32767"
+		echo 'dbLoadRecords("db/lia-real.db","'${xprams}'")'
+		xprams="${cprams},T=REF_PHASE,LO=0,HI=1023"
+		echo 'dbLoadRecords("db/lia-real.db","'${xprams}'")'
+		xprams="${cprams},T=REF_SEQ_ID,LO=0,HI=$nrm1'")'
+	done
 fi
 
-PRAMS="UUT=$HN,SITE=1,SPORT=S14"
 
-for ref in $(seq 1 $NR); do
-	let ref0=$ref-1
-	cprams="${PRAMS},FMIN=1000,FMAX=49000,REF=$ref,REF0=$ref0"
-	echo 'dbLoadRecords("db/lia-refs.db","'${cprams}'")'
-done
 create_asyn_channel S14 127.0.0.1:4234	
 
 if [ $MODE -ne 0 ]; then

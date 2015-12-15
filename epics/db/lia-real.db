@@ -1,0 +1,40 @@
+# lia-refs.db
+
+
+
+record(bo, "${UUT}:HAS_LIA") {
+	field(DTYP, "Soft Channel")
+	field(VAL, "1")
+	field(PINI, "YES")
+}
+
+record(longout, "${UUT}:DSP:LIA:${T}:${REF}") {
+	field(DTYP, "Soft Channel")
+	field(DRVL, "${LO}")
+	field(DRVH, "${HI}")
+	field(FLNK, "${UUT}:DSP:LIA:${T}:${REF} w PP")
+}
+
+record(longout, "${UUT}:DSP:LIA:${T}:${REF}:w") {
+	field(DTYP, "stream")
+	field(OMSL, "closed_loop")
+	field(DOL,  "${UUT}:DSP:LIA:${T}:${REF}")
+	field(OUT,  "@lia.proto setP(${REF}, ${T}) ${SPORT}")
+	field(DISV, "1")
+	field(SDIS, "${UUT}:DSP:LIA:${T}:${REF}:r.PACT")
+}
+
+record(longin, "${UUT}:DSP:LIA:${T}:${REF}:r") {
+	field(DTYP, "stream")
+	field(SCAN, "1 second")
+	field(INP,  "@lia.proto getP(${REF}, ${T}) ${SPORT}")
+	field(PINI, "YES")
+	field(FLNK, "${UUT}:DSP:LIA:REF:s")
+}
+
+record(longout, "${UUT}:DSP:LIA:${T}:${REF}:s") {
+	field(DTYP, "Soft Channel")
+	field(OMSL, "closed_loop")
+	field(DOL,  "${UUT}:DSP:LIA:${T}:${REF}:r NPP")
+	field(OUT,  "${UUT}:DSP:LIA:${T}:${REF} PP")
+}
