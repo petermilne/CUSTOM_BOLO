@@ -1,0 +1,19 @@
+# lia-refs.db
+
+
+
+record(bo, "${UUT}:HAS_LIA") {
+	field(DTYP, "Soft Channel")
+	field(VAL, "1")
+	field(PINI, "YES")
+}
+
+record(mbbi, "${UUT}:LIA_TYPE") {
+	field(DTYP, "stream")
+	field(PINI, "YES")
+	field(INP,  "@lia.proto getP(MODULE_ID.LIA_REF,0) ${SPORT}")
+	field(ZRST, "EXT REAL")
+	field(ONST, "EXT CPLX")
+	field(TWST, "INT CPLX")
+}
+

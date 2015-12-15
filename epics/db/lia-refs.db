@@ -2,12 +2,6 @@
 
 
 
-record(bo, "${UUT}:HAS_LIA") {
-	field(DTYP, "Soft Channel")
-	field(VAL, "1")
-	field(PINI, "YES")
-}
-
 record(longout, "${UUT}:DSP:LIA:REF") {
 	field(DTYP, "Soft Channel")
 	field(DRVL, "0")
