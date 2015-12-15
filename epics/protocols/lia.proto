@@ -32,4 +32,7 @@ getP {
 	in "%d";
 }
 
-
+getK {
+	out "@\$1";
+	in "%d";
+}

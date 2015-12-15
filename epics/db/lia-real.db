@@ -20,7 +20,7 @@ record(longout, "${UUT}:DSP:LIA:${T}:${REF}:w") {
 
 record(longin, "${UUT}:DSP:LIA:${T}:${REF}:r") {
 	field(DTYP, "stream")
-	field(SCAN, "10 second")
+	field(SCAN, "5 second")
 	field(INP,  "@lia.proto getP(${REF0},${T}) ${SPORT}")
 	field(PINI, "YES")
 	field(FLNK, "${UUT}:DSP:LIA:${T}:${REF}:s")

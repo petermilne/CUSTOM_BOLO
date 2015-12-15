@@ -11,7 +11,8 @@ record(bo, "${UUT}:DSP:HAS_LIA") {
 record(mbbi, "${UUT}:DSP:LIA:TYPE") {
 	field(DTYP, "stream")
 	field(PINI, "YES")
-	field(INP,  "@lia.proto getP(MODULE_ID.LIA_REF,0) ${SPORT}")
+#	field(SCAN, "10 second")
+	field(INP,  "@lia.proto getK(MODULE_ID.LIA_REF) ${SPORT}")
 	field(ZRST, "EXT REAL")
 	field(ONST, "EXT CPLX")
 	field(TWST, "INT CPLX")
@@ -20,11 +21,13 @@ record(mbbi, "${UUT}:DSP:LIA:TYPE") {
 record(longin, "${UUT}:DSP:LIA:NCHAN") {
 	field(DTYP, "stream")
 	field(PINI, "YES")
-	field(INP,  "@lia.proto getP(@NUM_CHAN,0) ${SPORT}")
+#	field(SCAN, "10 second")
+	field(INP,  "@lia.proto getK(NUM_CH) ${SPORT}")
 }
 
 record(longin, "${UUT}:DSP:LIA:NREF") {
 	field(DTYP, "stream")
 	field(PINI, "YES")
-	field(INP,  "@lia.proto getP(@NUM_REF,0), ${SPORT}")
+#	field(SCAN, "10 second")
+	field(INP,  "@lia.proto getK(NUM_REF) ${SPORT}")
 }
