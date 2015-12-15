@@ -12,8 +12,10 @@ ln -s /usr/local/bin/*lia* /etc/acq400/14/
 grep dsp /proc/devices | /usr/local/CARE/LIA/build_dsp_nodes
 ls -l /dev/dsp1.*
 
+# MODULE ENABLE
+echo 1 > /dev/dsp/DSP_CONTROL
 ln -s /usr/local/CARE/hanning-float.bin /dev/shm/window
-
+set.lia.enable 1
 
 echo "DSP sites 14, 15 active on 4224, 4225"
 

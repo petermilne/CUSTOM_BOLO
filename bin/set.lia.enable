@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# enable DSP and reset it to known state
+
+en=${1:-1}
+
+cd /dev/dsp1/
+if [ $en -eq 1 ]; then
+	echo 0 > DSP_CONTROL.RAW
+	echo 1 > DSP_CONTROL.EN
+	echo 1 > DSP_CONTROL.RST
+	echo 0 > DSP_CONTROL.RST
+else
+	echo 1 > DSP_CONTROL.RAW
+	echo 0 > DSP_CONTROL.EN
+	echo 0 > DSP_CONTROL.RST
+fi
+
+

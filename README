@@ -13,6 +13,14 @@ cp /usr/local/CARE/LIA/sysconfig/acq425-16-transient.init \
 	/mnt/local/sysconfig/transient.init
 
 
+** Tell EPICS we have LIA
+acq1001_084> cat /mnt/local/sysconfig/epics.sh 
+export EPICS_CA_MAX_ARRAY_BYTES=500000
+export IOC_PREINIT=./scripts/make-lia-aliases
+# allow more than 80 "channels" per module eg for LIA
+export ACQ400IOC_IDX_GT32=1
+
+
 Control reference offset with
 set.lia.ref_offset REF OFFSET
 .. set offset value for REF
