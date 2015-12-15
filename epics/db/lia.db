@@ -2,13 +2,13 @@
 
 
 
-record(bo, "${UUT}:HAS_LIA") {
+record(bo, "${UUT}:DSP:HAS_LIA") {
 	field(DTYP, "Soft Channel")
 	field(VAL, "1")
 	field(PINI, "YES")
 }
 
-record(mbbi, "${UUT}:LIA_TYPE") {
+record(mbbi, "${UUT}:DSP:LIA:TYPE") {
 	field(DTYP, "stream")
 	field(PINI, "YES")
 	field(INP,  "@lia.proto getP(MODULE_ID.LIA_REF,0) ${SPORT}")
@@ -17,3 +17,14 @@ record(mbbi, "${UUT}:LIA_TYPE") {
 	field(TWST, "INT CPLX")
 }
 
+record(longin, "${UUT}:DSP:LIA:NCHAN") {
+	field(DTYP, "stream")
+	field(PINI, "YES")
+	field(INP,  "@lia.proto getP(@NUM_CHAN,0) ${SPORT}")
+}
+
+record(longin, "${UUT}:DSP:LIA:NREF") {
+	field(DTYP, "stream")
+	field(PINI, "YES")
+	field(INP,  "@lia.proto getP(@NUM_REF,0), ${SPORT}")
+}
