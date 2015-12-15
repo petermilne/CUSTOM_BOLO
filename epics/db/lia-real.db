@@ -12,22 +12,22 @@ record(longout, "${UUT}:DSP:LIA:${T}:${REF}") {
 	field(DTYP, "Soft Channel")
 	field(DRVL, "${LO}")
 	field(DRVH, "${HI}")
-	field(FLNK, "${UUT}:DSP:LIA:${T}:${REF} w PP")
+	field(FLNK, "${UUT}:DSP:LIA:${T}:${REF}:w PP")
 }
 
 record(longout, "${UUT}:DSP:LIA:${T}:${REF}:w") {
 	field(DTYP, "stream")
 	field(OMSL, "closed_loop")
 	field(DOL,  "${UUT}:DSP:LIA:${T}:${REF}")
-	field(OUT,  "@lia.proto setP(${REF}, ${T}) ${SPORT}")
+	field(OUT,  "@lia.proto setP(${REF0},${T}) ${SPORT}")
 	field(DISV, "1")
 	field(SDIS, "${UUT}:DSP:LIA:${T}:${REF}:r.PACT")
 }
 
 record(longin, "${UUT}:DSP:LIA:${T}:${REF}:r") {
 	field(DTYP, "stream")
-	field(SCAN, "1 second")
-	field(INP,  "@lia.proto getP(${REF}, ${T}) ${SPORT}")
+	field(SCAN, "10 second")
+	field(INP,  "@lia.proto getP(${REF0},${T}) ${SPORT}")
 	field(PINI, "YES")
 	field(FLNK, "${UUT}:DSP:LIA:${T}:${REF}:s")
 }
