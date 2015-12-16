@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# reset LIA every shot
+
 (cd /dev/dsp1
 LIA=$(cat DSP_CONTROL.EN)
 if [ $LIA -eq 1 ]; then

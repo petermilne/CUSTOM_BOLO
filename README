@@ -6,6 +6,12 @@ mv /mnt/packages.opt/99-custom_lia-*tgz /mnt/packages
 
 Please note: custom sysconfig required.
 
+# recommended: reset LIA every shot:
+# the auto soft trigger command is usually present
+acq1001_069> cat /mnt/local/rc.user
+cp /usr/local/CARE/acq400_streamd.0.conf-soft_trigger /etc/sysconfig/
+cp /usr/local/CARE/LIA/acq400_streamd.0.conf.lia /etc/sysconfig/
+
 please review examples 
 /usr/local/CARE/LIA/sysconfig
 it may be enough to simply copy-over and reboot:
