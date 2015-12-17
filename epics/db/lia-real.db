@@ -6,6 +6,8 @@ record(longout, "${UUT}:DSP:LIA:${T}:${REF}") {
 	field(DTYP, "Soft Channel")
 	field(DRVL, "${LO}")
 	field(DRVH, "${HI}")
+	field(LOPR, "${LO}")
+	field(HOPR, "${HI}")
 	field(FLNK, "${UUT}:DSP:LIA:${T}:${REF}:w PP")
 }
 

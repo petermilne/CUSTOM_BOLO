@@ -91,7 +91,7 @@ if [ $MODE -ne 0 ]; then
 else
 	make_real_aliases > $ALIAS_DB
 	load_lia_aliases $ALIAS_DB
-	let nrm1="$NR-1"
+	let nchm1="$NC-1"
 	for ref in $(seq 1 $NR); do
 		let ref0=$ref-1
 		cprams="${PRAMS},REF=$ref,REF0=$ref0"
@@ -99,7 +99,7 @@ else
 		echo 'dbLoadRecords("db/lia-real.db","'${xprams}'")'
 		xprams="${cprams},T=REF_PHASE,LO=0,HI=1023"
 		echo 'dbLoadRecords("db/lia-real.db","'${xprams}'")'
-		xprams="${cprams},T=REF_SEQ_ID,LO=0,HI=$nrm1"
+		xprams="${cprams},T=REF_SEQ_ID,LO=0,HI=$nchm1"
 		echo 'dbLoadRecords("db/lia-real.db","'${xprams}'")'
 	done
 fi
