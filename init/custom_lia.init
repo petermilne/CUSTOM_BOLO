@@ -27,25 +27,38 @@ fi
 
 LIA_TYPE=$(cat /dev/dsp1/@MODULE_ID.LIA_TYPE)
 NREF=$(cat /dev/dsp1/@NUM_REF)
+NCM=$NREF
 NCHAN=$(cat /dev/dsp1/@NUM_CH)
 let NC="$NREF*$NCHAN"
 
 case $LIA_TYPE in
 11|12)
 	let NC="$NC*2"
+	let NCM="$NCM*2"
 	echo FOUND COMPLEX LIA, NREF=$NREF EFFECTIVE CHAN $NC;;
 *)
 	echo FOUND REAL_LIA, NREF=$NREF, EFFECTIVE CHAN $NC;;
 esac
 
-rm /etc/acq400/1/active_chan
-echo $NC > /etc/acq400/1/NCHAN
-echo $NC > /etc/acq400/1/active_chan
-# site 1 must be set to !data32 to feed 16 bit data to DSP
-# but EPICS must be set for LONGS to plot the 32 bit data from
-# DSP, so fake it
-rm /etc/acq400/1/data32
-echo 1 >/etc/acq400/1/data32
+let ncr=$NCHAN
+let site=1
+while [ $ncr -gt 0 ]; do
+	let ncx=$(cat /etc/acq400/$site/NCHAN)
+	# update to effective number of channels
+	let encx="$ncx*$NCM"
+	echo "Allocating site $site ncx=$ncx encx=$encx"
+	rm /etc/acq400/$site/active_chan
+	echo $encx > /etc/acq400/$site/NCHAN
+	echo $encx > /etc/acq400/$site/active_chan
+	# site 1 must be set to !data32 to feed 16 bit data to DSP
+	# but EPICS must be set for LONGS to plot the 32 bit data from
+	# DSP, so fake it
+	rm /etc/acq400/$site/data32
+	echo 1 >/etc/acq400/$site/data32
+
+	let ncr=$ncr-$ncx
+	let site=site+1
+done
 
 TI=/mnt/local/sysconfig/transient.init
 GOOD="COOKED=0 NSAMPLES=100000 NCHAN=$NC TYPE=LONG"
