@@ -51,6 +51,10 @@ signal from 2MHz to 10Mhz up to 100MHz
 
 Run this sequence to configure. It can be embedded in /mnt/local/rc.user
 
+Shortcut:
+
+cat /usr/local/CARE/LIA/external-clock-intref-setup >>/mnt/local/rc.user
+
 init_lia() {
 (	/usr/local/epics/scripts/wait_ioc_ready;
 	sleep 2;

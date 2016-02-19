@@ -1,0 +1,13 @@
+init_lia() {
+(	/usr/local/epics/scripts/wait_ioc_ready;
+	sleep 2;
+	# hook the 2 MHz clock..
+	set.site 0 SYS:CLK:FPMUX=FPCLK
+	sleep 2
+	load.lia.intref 0
+
+	set.lia.remote_clock_source
+	set.site 0 SIG:CLK_MB:SET 100000000
+	set.lia.intref.freq 0 20000
+) & }
+
