@@ -32,8 +32,41 @@ set.lia.ref_offset REF OFFSET
 .. set offset value for REF
 set.lia.ref_chan REF CHAN
 .. set external reference channel for REF
-set.lia.intref.freq REF
+set.lia.intref.freq REF FREQ
 .. set intref frequency
 
 
+Default intref uses internal clock 100MHz.
+However, it's also possible to use an external clock to drive the internal
+reference. This way the internal reference is frequency locked to some
+external reference. The external clock signal on the front panel can
+be set from 2MHz .. 10MHz. Then it's multiplied up by an onboard PLL to
+give a high frequency waveform to clock the internal reference, resulting
+in a high resolution reference signal.
+
+Note that since the FPGA internal clock domain is 100MHz, and signals have to pass FROM the external clock domain to the internal
+clock domain, it's recommended that the the clock going into the FPGA
+is close to 100MHz. The PLL device is able to multiple any external 
+signal from 2MHz to 10Mhz up to 100MHz
+
+Run this sequence to configure. It can be embedded in /mnt/local/rc.user
+
+init_lia() {
+(	/usr/local/epics/scripts/wait_ioc_ready;
+	sleep 2;
+	# hook the 2 MHz clock..
+	set.site 0 SYS:CLK:FPMUX=FPCLK
+	sleep 2
+	load.lia.intref 0
+
+	set.lia.remote_clock_source
+	set.site 0 SIG:CLK_MB:SET 100000000
+	set.lia.intref.freq 0 20000
+) & }
+
+
+init_lia 
+
+# recommendation: refer to CLKTREE OPI to check that the clocks are 
+# correctly configured.
 

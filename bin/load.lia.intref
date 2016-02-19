@@ -15,7 +15,7 @@ if [ ! -e $file ]; then
 fi
 let nsam="$(ls -l $file | awk '{ print $5/4 }')"
 let POW217=131072
-let ICLK=100000000
+let ICLK=${ICLK:-100000000}
 let refstep="$freq*$POW217*$nsam/$ICLK"
 
 echo $bank >/dev/dsp1/REF_ID

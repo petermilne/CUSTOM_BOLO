@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# enable DSP and reset it to known state
+
+en=${1:-1}
+
+echo $en > /dev/dsp1/DSP_CONTROL.RCS
+
+
+

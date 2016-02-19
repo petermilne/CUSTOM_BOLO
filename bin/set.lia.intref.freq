@@ -17,7 +17,7 @@ if [ $nsam -eq 0 ]; then
 	exit 1
 fi
 let POW217=131072
-let ICLK=100000000
+let ICLK=${ICLK:-100000000}
 let refstep="$freq*$POW217*$nsam/$ICLK"
 
 echo $refstep > /dev/dsp1/REF_STEP
