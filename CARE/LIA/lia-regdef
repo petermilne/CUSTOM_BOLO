@@ -14,7 +14,6 @@ DSP_CONTROL.RST 0x004 0x00000008 rw %d
 DSP_CONTROL.EN  0x004 0x00000010 rw %d
 DSP_CONTROL.RAW 0x004 0x00000020 rw %d
 DSP_CONTROL.RCS 0x004 0x00001000 rw %d
-PACKED_DATA   0x008 0xffffffff rw %d
 DSP_STATUS    0x014 0xffffffff rw %d
 EVENT_STATUS  0x018 0xffffffff rw %d
 REF_ID        0x020 0xffffffff rw %d
@@ -23,5 +22,4 @@ REF_OFFSET    0x028 0xffffffff rw %d
 REF_PHASE     0x02c 0xffffffff rw %d
 REF_SEQ_ID    0x030 0xffffffff rw %d
 REF_LENGTH    0x034 0xffffffff rw %d
-RAW_DATA      0x040 0xffffffff rw %d
 
